@@ -1,3 +1,8 @@
+# Install
+
+`git clone --recurse-submodules git@github.com:raqqun/docker-kanboard.git`
+
+
 # Build
 
 To build images and run containers, execute:
@@ -13,7 +18,7 @@ Then visit [localhost](http://localhost/). Enter admin/admin as default username
 
 To cleanup your environment and startover, execute:
 
-`docker-compose down --rmi`
+`docker-compose down --rmi all`
 
 
 # Deploy with ansible
