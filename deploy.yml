@@ -1,5 +1,5 @@
 ---
-- name: Create new meteor production environment
+- name: Deploy kanboard locally
   hosts: localhost
 
   roles:
