@@ -1,0 +1,6 @@
+---
+- name: Create new meteor production environment
+  hosts: localhost
+
+  roles:
+    - deploy-containers

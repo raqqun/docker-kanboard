@@ -1,0 +1,47 @@
+---
+- name: Start kanboard_network container
+  docker_network:
+    name: kanboard_network
+    state: present
+
+- name: Start mariadb container
+  docker_container:
+    name: mariadb
+    hostname: mariadb
+    image: mariadb:latest
+    restart_policy: always
+    networks:
+      - name: kanboard_network
+    env:
+      MYSQL_ROOT_PASSWORD: "secret"
+      MYSQL_DATABASE: "kanboard"
+      MYSQL_USER: "kb"
+      MYSQL_PASSWORD: "kb-secret"
+    state: started
+
+- name: Start Nginx container
+  docker_container:
+    name: nginx
+    hostname: nginx
+    image: raqqun0101/nginx-kanboard:latest
+    restart_policy: always
+    networks:
+      - name: kanboard_network
+    ports:
+      - "80:80"
+      - "443:443"
+    env:
+      DATABASE_URL: mysql://kb:kb-secret@mariadb/kanboard
+    state: started
+
+- name: Start PHP-fpm container
+  docker_container:
+    name: php
+    hostname: php
+    image: raqqun0101/php-fpm-kanboard:latest
+    restart_policy: always
+    networks:
+      - name: kanboard_network
+    state: started
+
+
